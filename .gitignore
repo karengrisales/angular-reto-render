@@ -1,0 +1,7 @@
+/node_modules
+/.angular/
+/dist
+/.pnp
+.pnp.js
+.sass-cache/
+.DS_Store
