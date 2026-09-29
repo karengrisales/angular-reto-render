@@ -1,0 +1,88 @@
+<header class="header" role="banner">
+  <div class="header__inner container">
+
+    <!-- Logo -->
+    <a class="header__logo" routerLink="/" [attr.aria-label]="brand.name + ' — Inicio'" (click)="closeMenu()">
+      <span class="header__logo-name">{{ brand.name }}</span>
+      <span class="header__logo-slogan">{{ brand.slogan }}</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="header__nav" aria-label="Navegación principal">
+      <ul role="list" class="header__nav-list">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              class="header__nav-link"
+              [routerLink]="link.path"
+              routerLinkActive="header__nav-link--active"
+              [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            >{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header__actions">
+      <a
+        class="header__fav-btn"
+        routerLink="/favoritos"
+        [attr.aria-label]="'Favoritos (' + favorites.count() + ')'"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        @if (favorites.count() > 0) {
+          <span class="header__fav-count" aria-hidden="true">{{ favorites.count() }}</span>
+        }
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button
+        class="header__burger"
+        type="button"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Abrir menu"
+        (click)="toggleMenu()"
+      >
+        <span class="header__burger-bar"></span>
+        <span class="header__burger-bar"></span>
+        <span class="header__burger-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav
+  id="mobile-menu"
+  class="mobile-nav"
+  [class.mobile-nav--open]="menuOpen()"
+  aria-label="Menú móvil"
+  [attr.aria-hidden]="!menuOpen()"
+>
+  <ul role="list" class="mobile-nav__list">
+    @for (link of navLinks; track link.path) {
+      <li>
+        <a
+          class="mobile-nav__link"
+          [routerLink]="link.path"
+          routerLinkActive="mobile-nav__link--active"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+          (click)="closeMenu()"
+        >{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+</nav>
+
+<!-- Backdrop -->
+@if (menuOpen()) {
+  <div
+    class="mobile-backdrop"
+    aria-hidden="true"
+    (click)="closeMenu()"
+  ></div>
+}

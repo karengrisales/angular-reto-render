@@ -1,0 +1,32 @@
+@if (loading()) {
+  <!-- Skeleton placeholders for CLS-stable layout while loading -->
+  <ul class="grid" role="list" aria-busy="true" aria-label="Cargando productos">
+    @for (n of [].constructor(skeletonCount()); track $index) {
+      <li class="grid__item">
+        <div class="grid__skeleton" aria-hidden="true">
+          <div class="skeleton grid__skeleton-image"></div>
+          <div class="grid__skeleton-info">
+            <div class="skeleton grid__skeleton-badge"></div>
+            <div class="skeleton grid__skeleton-title"></div>
+            <div class="skeleton grid__skeleton-desc"></div>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+} @else if (products().length === 0) {
+  <div class="grid__empty" role="status">
+    <p class="grid__empty-text">No hay productos en esta categoría todavía.</p>
+  </div>
+} @else {
+  <ul class="grid" role="list">
+    @for (product of products(); track product.id; let i = $index) {
+      <li class="grid__item">
+        <app-product-card
+          [product]="product"
+          [priority]="i < priorityCount()"
+        />
+      </li>
+    }
+  </ul>
+}

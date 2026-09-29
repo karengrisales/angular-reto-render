@@ -1,0 +1,98 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.product-card {
+  @include card-base;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__image-wrap {
+    position: relative;
+    @include aspect-ratio(4, 5);
+    background: $color-accent-light;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $duration-slow $ease-standard;
+
+    .product-card:hover & {
+      transform: scale(1.04);
+    }
+  }
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, $color-accent-light 0%, $color-surface 100%);
+  }
+
+  &__fav {
+    @include button-reset;
+    position: absolute;
+    top: $space-3;
+    right: $space-3;
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-full;
+    background: rgba(#fff, 0.9);
+    backdrop-filter: blur(4px);
+    @include flex-center;
+    color: $color-neutral;
+    transition: $transition-colors, transform $duration-fast $ease-standard;
+    z-index: 2;
+
+    &:hover { color: $color-accent; transform: scale(1.1); }
+    &[aria-pressed='true'] { color: $color-accent; }
+    &:focus-visible { @include focus-ring; }
+  }
+
+  &__badge {
+    position: absolute;
+    bottom: $space-3;
+    left: $space-3;
+  }
+
+  &__info {
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex: 1;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: $text-lg;
+    font-weight: $font-medium;
+    color: $color-text;
+    margin: 0;
+    line-height: $line-height-snug;
+    @include line-clamp(2);
+  }
+
+  &__desc {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    margin: 0;
+    @include line-clamp(2);
+    line-height: $line-height-normal;
+  }
+}

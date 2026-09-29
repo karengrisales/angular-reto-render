@@ -1,0 +1,102 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.footer {
+  background: $color-primary;
+  color: rgba($color-cream, 0.8);
+  margin-top: auto;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-8;
+    padding-block: $space-12;
+
+    @include respond-to(md) { grid-template-columns: 2fr 1fr 1fr; }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  &__logo-name {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    font-weight: $font-semibold;
+    color: $color-cream;
+  }
+
+  &__logo-slogan {
+    font-size: $text-xs;
+    color: rgba($color-cream, 0.6);
+    font-style: italic;
+  }
+
+  &__desc {
+    font-size: $text-sm;
+    line-height: $line-height-loose;
+    max-width: 36ch;
+    margin: 0;
+  }
+
+  &__nav-title {
+    font-family: $font-body;
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba($color-cream, 0.5);
+    margin: 0 0 $space-4;
+  }
+
+  &__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__nav-link {
+    font-size: $text-sm;
+    color: rgba($color-cream, 0.75);
+    text-decoration: none;
+    transition: color $duration-fast $ease-standard;
+
+    &:hover { color: $color-cream; }
+    &:focus-visible { @include focus-ring; }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__social {
+    @include flex-center;
+    justify-content: flex-start;
+    gap: $space-2;
+    margin-bottom: $space-2;
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba($color-cream, 0.12);
+    padding-block: $space-4;
+  }
+
+  &__copy {
+    @include container;
+    font-size: $text-xs;
+    text-align: center;
+    color: rgba($color-cream, 0.45);
+    margin: 0;
+  }
+}

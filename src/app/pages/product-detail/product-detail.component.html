@@ -1,0 +1,141 @@
+<app-main-layout>
+  @if (loading()) {
+    <div class="product-detail container page-enter" aria-busy="true" aria-label="Cargando producto">
+      <div class="product-detail__skeleton">
+        <div class="skeleton product-detail__skeleton-img"></div>
+        <div class="product-detail__skeleton-info">
+          <div class="skeleton" style="height:20px;width:80px;border-radius:999px"></div>
+          <div class="skeleton" style="height:40px;width:70%;margin-top:12px"></div>
+          <div class="skeleton" style="height:16px;width:100%;margin-top:20px"></div>
+          <div class="skeleton" style="height:16px;width:90%;margin-top:8px"></div>
+          <div class="skeleton" style="height:16px;width:75%;margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+  } @else if (notFound()) {
+    <div class="not-found container" role="status">
+      <h1 class="not-found__title">Pieza no encontrada</h1>
+      <p class="not-found__desc">Esta pieza no está disponible o fue retirada del catálogo.</p>
+      <app-button [routerLink]="['/catalogo']">Volver al catálogo</app-button>
+    </div>
+  } @else if (product()) {
+    <article class="product-detail container page-enter" [attr.aria-label]="product()!.name">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Miga de pan">
+        <ol class="breadcrumb__list" role="list">
+          <li><a class="breadcrumb__link" routerLink="/">Inicio</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a class="breadcrumb__link" routerLink="/catalogo">Catálogo</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a class="breadcrumb__link" [routerLink]="['/catalogo', product()!.category]">{{ product()!.categoryName }}</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="breadcrumb__current" aria-current="page">{{ product()!.name }}</li>
+        </ol>
+      </nav>
+
+      <div class="product-detail__layout">
+
+        <!-- Gallery -->
+        <div class="product-detail__gallery" aria-label="Galería de imágenes">
+          @if (product()!.images.length > 0) {
+            <div class="product-detail__main-img">
+              <img
+                class="product-detail__img"
+                [ngSrc]="product()!.images[activeImageIndex()].url"
+                [alt]="product()!.images[activeImageIndex()].alt"
+                [width]="product()!.images[activeImageIndex()].width"
+                [height]="product()!.images[activeImageIndex()].height"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+
+            @if (product()!.images.length > 1) {
+              <div class="product-detail__thumbnails" role="tablist" aria-label="Miniaturas">
+                @for (img of product()!.images; track img.url; let i = $index) {
+                  <button
+                    class="product-detail__thumb"
+                    type="button"
+                    role="tab"
+                    [attr.aria-selected]="activeImageIndex() === i"
+                    [attr.aria-label]="'Ver imagen ' + (i + 1)"
+                    [class.product-detail__thumb--active]="activeImageIndex() === i"
+                    (click)="setActiveImage(i)"
+                  >
+                    <img [ngSrc]="img.url" [alt]="img.alt" width="72" height="72" />
+                  </button>
+                }
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Info -->
+        <div class="product-detail__info">
+          <div class="product-detail__meta">
+            <app-badge variant="surface">{{ product()!.categoryName }}</app-badge>
+            @if (product()!.featured) {
+              <app-badge variant="primary">Destacado</app-badge>
+            }
+          </div>
+
+          <h1 class="product-detail__name">{{ product()!.name }}</h1>
+
+          @if (product()!.description) {
+            <p class="product-detail__desc">{{ product()!.description }}</p>
+          }
+
+          @if (product()!.materials && product()!.materials!.length > 0) {
+            <div class="product-detail__materials">
+              <h2 class="product-detail__section-title">Materiales</h2>
+              <ul class="product-detail__materials-list" role="list">
+                @for (mat of product()!.materials!; track mat) {
+                  <li class="product-detail__material-tag">{{ mat }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          <!-- Actions -->
+          <div class="product-detail__actions">
+            <button
+              class="product-detail__fav-btn"
+              type="button"
+              [attr.aria-pressed]="isFav()"
+              [attr.aria-label]="isFav() ? 'Quitar de favoritos' : 'Guardar en favoritos'"
+              (click)="toggleFavorite()"
+            >
+              @if (isFav()) {
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Guardado
+              } @else {
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                Guardar favorito
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related products (deferred — below fold) -->
+      @if (relatedProducts().length > 0) {
+        @defer (on viewport) {
+          <section class="product-detail__related" aria-labelledby="related-heading">
+            <h2 class="product-detail__related-title" id="related-heading">
+              Más {{ product()!.categoryName }}
+            </h2>
+            <app-product-grid [products]="relatedProducts()" [priorityCount]="0" />
+          </section>
+        } @placeholder {
+          <div style="min-height:200px"></div>
+        }
+      }
+
+    </article>
+  }
+</app-main-layout>

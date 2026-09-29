@@ -1,0 +1,67 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.grid {
+  @include product-grid;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__empty {
+    grid-column: 1 / -1;
+    @include flex-center;
+    padding: $space-16 $space-4;
+    text-align: center;
+  }
+
+  &__empty-text {
+    font-family: $font-display;
+    font-size: $text-xl;
+    color: $color-text-muted;
+  }
+
+  // Skeleton cards
+  &__skeleton {
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background: $color-surface-card;
+    box-shadow: $shadow-sm;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__skeleton-image {
+    @include aspect-ratio(4, 5);
+    width: 100%;
+    background: $color-accent-light;
+  }
+
+  &__skeleton-info {
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex: 1;
+  }
+
+  &__skeleton-badge {
+    height: 20px;
+    width: 64px;
+    border-radius: $radius-full;
+  }
+
+  &__skeleton-title {
+    height: 22px;
+    width: 80%;
+    border-radius: $radius-sm;
+  }
+
+  &__skeleton-desc {
+    height: 14px;
+    width: 60%;
+    border-radius: $radius-sm;
+  }
+}

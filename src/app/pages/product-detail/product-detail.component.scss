@@ -1,0 +1,206 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.product-detail {
+  padding-block: $space-6 $space-16;
+
+  &__skeleton {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-8;
+    @include respond-to(md) { grid-template-columns: 1fr 1fr; }
+
+    &-img {
+      @include aspect-ratio(1, 1);
+      width: 100%;
+      border-radius: $radius-lg;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      padding-top: $space-4;
+    }
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-8;
+    margin-top: $space-4;
+
+    @include respond-to(md) { grid-template-columns: 1fr 1fr; align-items: start; }
+    @include respond-to(lg) { grid-template-columns: 3fr 2fr; }
+  }
+
+  &__gallery { display: flex; flex-direction: column; gap: $space-3; }
+
+  &__main-img {
+    border-radius: $radius-xl;
+    overflow: hidden;
+    background: $color-accent-light;
+    @include aspect-ratio(1, 1);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__thumbnails {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+  }
+
+  &__thumb {
+    @include button-reset;
+    width: 72px;
+    height: 72px;
+    border-radius: $radius-md;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color $duration-fast $ease-standard;
+    cursor: pointer;
+
+    img { width: 100%; height: 100%; object-fit: cover; }
+
+    &--active { border-color: $color-primary; }
+    &:hover:not(&--active) { border-color: $color-secondary; }
+    &:focus-visible { @include focus-ring; }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    position: sticky;
+    top: calc($header-height + $space-6);
+  }
+
+  &__meta {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: clamp($text-2xl, 4vw, $text-4xl);
+    color: $color-text;
+    margin: 0;
+    line-height: $line-height-tight;
+  }
+
+  &__desc {
+    font-size: $text-base;
+    line-height: $line-height-loose;
+    color: $color-text-body;
+    margin: 0;
+  }
+
+  &__section-title {
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-text-muted;
+    margin: 0 0 $space-2;
+  }
+
+  &__materials-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+
+  &__material-tag {
+    padding: $space-1 $space-3;
+    background: $color-accent-light;
+    color: $color-text;
+    border-radius: $radius-full;
+    font-size: $text-sm;
+  }
+
+  &__actions { margin-top: $space-2; }
+
+  &__fav-btn {
+    @include button-reset;
+    @include flex-center;
+    gap: $space-2;
+    padding: $space-4 $space-6;
+    border: 1.5px solid $color-primary;
+    border-radius: $radius-full;
+    font-size: $text-base;
+    font-weight: $font-medium;
+    color: $color-primary;
+    width: 100%;
+    transition: $transition-colors, box-shadow $transition-base;
+    cursor: pointer;
+
+    &:hover { background: rgba($color-primary, 0.06); box-shadow: $shadow-sm; }
+    &[aria-pressed='true'] { background: $color-accent; border-color: $color-accent; color: #fff; }
+    &:focus-visible { @include focus-ring; }
+  }
+
+  &__related {
+    margin-top: $space-16;
+    padding-top: $space-8;
+    border-top: $border-thin;
+  }
+
+  &__related-title {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    color: $color-text;
+    margin: 0 0 $space-8;
+  }
+}
+
+// Breadcrumb
+.breadcrumb {
+  margin-bottom: $space-4;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    align-items: center;
+    font-size: $text-sm;
+    color: $color-text-muted;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__link {
+    color: $color-text-muted;
+    text-decoration: none;
+    &:hover { color: $color-primary; }
+  }
+
+  &__current { color: $color-text; font-weight: $font-medium; }
+}
+
+// Not found
+.not-found {
+  padding-block: $space-16;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+
+  &__title {
+    font-family: $font-display;
+    font-size: $text-3xl;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__desc {
+    color: $color-text-muted;
+    margin: 0;
+  }
+}

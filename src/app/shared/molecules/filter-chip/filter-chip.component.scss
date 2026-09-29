@@ -1,0 +1,42 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.chip {
+  @include button-reset;
+  @include flex-center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  border: 1.5px solid $color-border;
+  background: transparent;
+  font-family: $font-body;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $color-text-muted;
+  transition: $transition-colors, border-color $duration-fast $ease-standard, box-shadow $duration-fast $ease-standard;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $color-secondary;
+    color: $color-text;
+    background: rgba($color-primary, 0.04);
+  }
+
+  &:focus-visible { @include focus-ring; }
+
+  &--active {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-cream;
+    box-shadow: $shadow-sm;
+
+    &:hover {
+      background: lighten($color-primary, 6%);
+      border-color: lighten($color-primary, 6%);
+    }
+  }
+
+  &__icon { font-size: $text-base; line-height: 1; }
+  &__label { line-height: 1; }
+}

@@ -1,13 +1,62 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>RenderizadoWeb</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <app-root></app-root>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <base href="/">
+
+  <!-- Viewport — Mobile first -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary SEO — updated per-page by SeoService -->
+  <title>Alexa Bijoux — Sé tu propia inspiración</title>
+  <meta name="description" content="Bisutería artesanal única — collares, manillas, aretes y anillos creados con amor. Explora la colección de Alexa Bijoux.">
+  <meta name="theme-color" content="#4c1c4f">
+  <meta name="author" content="Alexa Bijoux">
+
+  <!-- Open Graph defaults (overridden per-page by SeoService) -->
+  <meta property="og:site_name" content="Alexa Bijoux">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Alexa Bijoux — Sé tu propia inspiración">
+  <meta property="og:description" content="Bisutería artesanal única — collares, manillas, aretes y anillos creados con amor.">
+  <meta property="og:image" content="/assets/images/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Alexa Bijoux bisutería artesanal">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Card defaults -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@alexabijoux">
+  <meta name="twitter:title" content="Alexa Bijoux — Sé tu propia inspiración">
+  <meta name="twitter:description" content="Bisutería artesanal única — collares, manillas, aretes y anillos creados con amor.">
+  <meta name="twitter:image" content="/assets/images/og-cover.jpg">
+
+  <!-- Canonical (set per-page by SeoService) -->
+  <link rel="canonical" href="https://alexabijoux.com">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+
+  <!-- Preconnect for Core Web Vitals — eliminates connection setup latency for critical origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.ctfassets.net">
+  <link rel="dns-prefetch" href="https://cdn.contentful.com">
+
+  <!-- Fonts — non-blocking load (avoids render-blocking) -->
+  <link
+    rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap">
+  </noscript>
+</head>
+<body>
+  <app-root></app-root>
+</body>
 </html>

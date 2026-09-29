@@ -1,0 +1,186 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Skip link ──────────────────────────────────────────────────────────────
+.skip-link {
+  @include visually-hidden;
+  &:focus { @include focus-ring; all: initial; display: block; padding: $space-3 $space-4; background: $color-primary; color: $color-cream; font-weight: $font-medium; }
+}
+
+// ── Section helpers ────────────────────────────────────────────────────────
+.section {
+  padding-block: $space-12 $space-16;
+
+  @include respond-to(md) { padding-block: $space-16 $space-20; }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-8;
+    flex-wrap: wrap;
+    gap: $space-4;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp($text-2xl, 3vw, $text-3xl);
+    font-weight: $font-semibold;
+    color: $color-text;
+    margin: 0;
+  }
+}
+
+// ── Hero ───────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 85vh;
+  @include flex-center;
+  overflow: hidden;
+  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 5%) 60%, $color-accent 100%);
+  color: $color-cream;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(ellipse at 70% 50%, rgba($color-accent-light, 0.15) 0%, transparent 60%),
+                      radial-gradient(ellipse at 20% 80%, rgba($color-accent, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-block: $space-16;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-4;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  &__eyebrow {
+    color: rgba($color-cream, 0.7);
+    letter-spacing: 0.15em;
+    margin: 0;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp($text-4xl, 7vw, $text-5xl);
+    font-weight: $font-semibold;
+    color: $color-cream;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  &__slogan {
+    font-family: $font-display;
+    font-size: clamp($text-lg, 3vw, $text-2xl);
+    font-style: italic;
+    color: rgba($color-cream, 0.85);
+    margin: 0;
+  }
+
+  &__desc {
+    font-size: $text-base;
+    color: rgba($color-cream, 0.7);
+    line-height: $line-height-loose;
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-3;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: $space-2;
+  }
+}
+
+// ── Categories ─────────────────────────────────────────────────────────────
+.categories {
+  background: $color-cream;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+
+    @include respond-to(sm) { grid-template-columns: repeat(4, 1fr); }
+  }
+}
+
+.category-card {
+  @include flex-center;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6 $space-4;
+  background: #fff;
+  border-radius: $radius-xl;
+  border: $border-thin;
+  text-decoration: none;
+  color: $color-text;
+  transition: $transition-colors, box-shadow $transition-base, transform $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+    box-shadow: $shadow-md;
+    transform: translateY(-3px);
+    background: $color-accent-light;
+  }
+
+  &:focus-visible { @include focus-ring; }
+
+  &__icon { font-size: 2.5rem; }
+  &__name { font-size: $text-base; font-weight: $font-medium; }
+}
+
+// ── Brand story ────────────────────────────────────────────────────────────
+.story {
+  background: $color-primary;
+  color: $color-cream;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-8;
+    align-items: center;
+
+    @include respond-to(md) { grid-template-columns: 1fr 1fr; }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+
+    .label { color: rgba($color-cream, 0.6); }
+    .section__title { color: $color-cream; }
+  }
+
+  &__body {
+    line-height: $line-height-loose;
+    color: rgba($color-cream, 0.8);
+    margin: 0;
+  }
+
+  &__visual {
+    position: relative;
+    height: 280px;
+    display: none;
+
+    @include respond-to(md) { display: block; }
+  }
+
+  &__ornament {
+    position: absolute;
+    border-radius: $radius-full;
+    opacity: 0.3;
+
+    &--1 { width: 180px; height: 180px; background: $color-accent-light; top: 20px; left: 20px; }
+    &--2 { width: 120px; height: 120px; background: $color-accent; bottom: 30px; right: 40px; }
+    &--3 { width: 80px; height: 80px; background: $color-secondary; top: 60px; right: 60px; }
+  }
+}

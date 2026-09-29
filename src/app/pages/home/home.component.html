@@ -1,0 +1,87 @@
+<app-main-layout>
+  <!-- Skip link (accessibility) -->
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+  <!-- ─── Hero ────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero__content container">
+      <p class="hero__eyebrow label">Bisutería artesanal</p>
+      <h1 class="hero__title" id="hero-heading">{{ brand.name }}</h1>
+      <p class="hero__slogan">{{ brand.slogan }}</p>
+      <p class="hero__desc">{{ brand.description }}</p>
+      <div class="hero__actions">
+        <app-button size="lg" [routerLink]="['/catalogo']">
+          Ver catálogo
+        </app-button>
+        <app-button variant="secondary" size="lg" [routerLink]="['/favoritos']">
+          Mis favoritos
+        </app-button>
+      </div>
+    </div>
+    <div class="hero__bg" aria-hidden="true"></div>
+  </section>
+
+  <!-- ─── Categories ──────────────────────────────────────────── -->
+  <section class="categories section" aria-labelledby="categories-heading">
+    <div class="container">
+      <h2 class="section__title" id="categories-heading">Explorar por categoría</h2>
+      <div class="categories__grid" role="list">
+        @for (cat of categories; track cat.slug) {
+          <a
+            class="category-card"
+            [routerLink]="['/catalogo', cat.slug]"
+            role="listitem"
+            [attr.aria-label]="'Ver ' + cat.name"
+          >
+            <span class="category-card__icon" aria-hidden="true">{{ cat.icon }}</span>
+            <span class="category-card__name">{{ cat.name }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Featured Products ───────────────────────────────────── -->
+  <section class="featured section" aria-labelledby="featured-heading">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title" id="featured-heading">Piezas destacadas</h2>
+        <app-button variant="ghost" [routerLink]="['/catalogo']">Ver todo →</app-button>
+      </div>
+
+      <app-product-grid
+        [products]="featuredProducts()"
+        [loading]="loading()"
+        [priorityCount]="4"
+      />
+    </div>
+  </section>
+
+  <!-- ─── Brand story (defer — below the fold) ────────────────── -->
+  @defer (on viewport) {
+    <section class="story section" aria-labelledby="story-heading">
+      <div class="story__inner container">
+        <div class="story__text">
+          <p class="label">Nuestra historia</p>
+          <h2 class="section__title" id="story-heading">Cada pieza, una historia única</h2>
+          <p class="story__body">
+            {{ brand.name }} nació del amor por la bisutería artesanal y el deseo de ofrecer piezas únicas
+            que reflejen la personalidad de quien las lleva. Cada collar, manilla, arete y anillo es
+            creado con materiales cuidadosamente seleccionados.
+          </p>
+          <app-button variant="secondary" [routerLink]="['/catalogo']">
+            Explorar colección
+          </app-button>
+        </div>
+        <div class="story__visual" aria-hidden="true">
+          <div class="story__ornament story__ornament--1"></div>
+          <div class="story__ornament story__ornament--2"></div>
+          <div class="story__ornament story__ornament--3"></div>
+        </div>
+      </div>
+    </section>
+  } @placeholder {
+    <div class="story section" aria-hidden="true" style="min-height: 320px;"></div>
+  }
+
+</app-main-layout>

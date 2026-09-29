@@ -1,0 +1,21 @@
+<section class="cat-filter" aria-label="Filtrar por categoría">
+  <div class="cat-filter__chips" role="group" aria-label="Categorías">
+    <app-filter-chip
+      [label]="allOption.name"
+      [value]="allOption.slug"
+      [icon]="allOption.icon"
+      [active]="activeSlug() === 'all'"
+      (selected)="filterChanged.emit($event)"
+    />
+
+    @for (cat of categories(); track cat.id) {
+      <app-filter-chip
+        [label]="cat.name"
+        [value]="cat.slug"
+        [icon]="cat.icon"
+        [active]="activeSlug() === cat.slug"
+        (selected)="filterChanged.emit($event)"
+      />
+    }
+  </div>
+</section>

@@ -1,0 +1,61 @@
+@use 'variables' as *;
+
+// =============================================================================
+// ALEXA BIJOUX — Typography Scale
+// =============================================================================
+
+// Google Fonts preconnect is in index.html. The actual @import is deferred via
+// the non-blocking link tag there. Inline @import below is only the fallback.
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap');
+
+// Global base
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-body;
+  font-size: $text-base;
+  font-weight: $font-regular;
+  line-height: $line-height-normal;
+  color: $color-text-body;
+  background-color: $color-bg;
+}
+
+// Headings — Cormorant Garamond for elegance
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  color: $color-text;
+  line-height: $line-height-tight;
+  margin-block: 0;
+}
+
+h1 { font-size: clamp($text-3xl, 5vw, $text-5xl); font-weight: $font-semibold; }
+h2 { font-size: clamp($text-2xl, 4vw, $text-4xl); font-weight: $font-semibold; }
+h3 { font-size: clamp($text-xl,  3vw, $text-3xl); font-weight: $font-medium; }
+h4 { font-size: $text-xl; font-weight: $font-medium; }
+h5 { font-size: $text-lg; font-weight: $font-medium; }
+h6 { font-size: $text-base; font-weight: $font-semibold; }
+
+p   { margin-block: 0; }
+a   { color: $color-cta; text-decoration: none; transition: $transition-colors; }
+a:hover { color: $color-cta-hover; }
+
+strong { font-weight: $font-semibold; }
+em     { font-style: italic; }
+
+small {
+  font-size: $text-sm;
+  color: $color-text-muted;
+}
+
+// Utility classes
+.display-1 { font-family: $font-display; font-size: clamp($text-4xl, 6vw, $text-5xl); font-weight: $font-semibold; line-height: $line-height-tight; }
+.display-2 { font-family: $font-display; font-size: clamp($text-3xl, 5vw, $text-4xl); font-weight: $font-semibold; line-height: $line-height-tight; }
+.subtitle   { font-size: $text-lg; color: $color-text-muted; line-height: $line-height-loose; }
+.label      { font-size: $text-xs; font-weight: $font-semibold; text-transform: uppercase; letter-spacing: 0.1em; color: $color-text-muted; }
+.caption    { font-size: $text-xs; color: $color-text-muted; }

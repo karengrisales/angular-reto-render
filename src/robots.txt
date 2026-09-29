@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /favoritos
+
+Sitemap: https://alexabijoux.com/sitemap.xml

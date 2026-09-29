@@ -1,0 +1,69 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.catalog {
+  &__header {
+    padding-block: $space-8 $space-4;
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: $space-2;
+
+    @include respond-to(md) { padding-block: $space-12 $space-6; }
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp($text-2xl, 4vw, $text-3xl);
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__count {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    margin: 0;
+  }
+
+  &__toolbar {
+    padding-bottom: $space-6;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-4;
+  }
+
+  &__sort {
+    @include flex-center;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+
+  &__sort-label {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    white-space: nowrap;
+  }
+
+  &__sort-select {
+    font-family: $font-body;
+    font-size: $text-sm;
+    color: $color-text;
+    background: #fff;
+    border: $border-thin;
+    border-radius: $radius-md;
+    padding: $space-2 $space-3;
+    cursor: pointer;
+    appearance: none;
+    padding-right: $space-6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238c7d87' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-3 center;
+
+    &:focus-visible { @include focus-ring; }
+  }
+
+  &__grid {
+    padding-bottom: $space-16;
+  }
+}

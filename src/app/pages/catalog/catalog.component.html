@@ -1,0 +1,53 @@
+<app-main-layout>
+  <div class="catalog page-enter">
+
+    <header class="catalog__header container">
+      <h1 class="catalog__title">
+        @if (activeCategory() === 'all') {
+          Catálogo completo
+        } @else {
+          {{ activeCategory() | titlecase }}
+        }
+      </h1>
+      <p class="catalog__count">
+        @if (!loading()) {
+          {{ sortedProducts().length }} {{ sortedProducts().length === 1 ? 'pieza' : 'piezas' }}
+        }
+      </p>
+    </header>
+
+    <!-- Filters bar -->
+    <div class="catalog__toolbar container">
+      <app-category-filter
+        [categories]="categories"
+        [activeSlug]="activeCategory()"
+        (filterChanged)="onFilterChange($event)"
+      />
+
+      <!-- Sort — Strategy pattern selector -->
+      <div class="catalog__sort">
+        <label class="catalog__sort-label" for="sort-select">Ordenar:</label>
+        <select
+          id="sort-select"
+          class="catalog__sort-select"
+          [value]="sortService.active().value"
+          (change)="onSortChange($event)"
+          aria-label="Ordenar productos"
+        >
+          @for (strategy of sortService.strategies; track strategy.value) {
+            <option [value]="strategy.value">{{ strategy.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="catalog__grid container">
+      <app-product-grid
+        [products]="sortedProducts()"
+        [loading]="loading()"
+      />
+    </div>
+
+  </div>
+</app-main-layout>

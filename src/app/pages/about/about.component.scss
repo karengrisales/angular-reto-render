@@ -1,0 +1,85 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.about {
+  &__hero {
+    padding-block: $space-16 $space-12;
+    text-align: center;
+  }
+
+  &__narrow {
+    max-width: $container-prose;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp($text-3xl, 5vw, $text-5xl);
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__lead {
+    font-family: $font-display;
+    font-size: $text-xl;
+    color: $color-accent;
+    margin: 0;
+  }
+
+  &__body {
+    line-height: $line-height-loose;
+    color: $color-text-body;
+    margin: 0;
+  }
+
+  &__section {
+    padding-block: $space-12;
+  }
+
+  &__section-title {
+    font-family: $font-display;
+    font-size: clamp($text-2xl, 4vw, $text-3xl);
+    color: $color-text;
+    text-align: center;
+    margin: 0 0 $space-8;
+  }
+
+  &__grid,
+  &__values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-6;
+
+    @include respond-to(md) { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  &__values {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include respond-to(md) { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  &__card {
+    @include card-base;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    padding: $space-6;
+  }
+
+  &__card-title {
+    font-family: $font-display;
+    font-size: $text-xl;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__cta {
+    @include flex-center;
+    margin-top: $space-10;
+  }
+}

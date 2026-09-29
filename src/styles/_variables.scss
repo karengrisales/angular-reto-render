@@ -1,0 +1,125 @@
+// =============================================================================
+// ALEXA BIJOUX — Design Tokens
+// Single source of truth for all design decisions.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Color Palette (official)
+// -----------------------------------------------------------------------------
+$color-primary:      #4c1c4f; // Deep purple — brand identity, headlines
+$color-cream:        #f9f6ea; // Cream — page background
+$color-secondary:    #ac92a8; // Soft mauve — secondary text, borders
+$color-accent-light: #d7c0d1; // Light lavender — cards, hover states
+$color-neutral:      #8c7d87; // Muted gray-purple — body text, placeholders
+$color-surface:      #c4b4c0; // Light mauve surface — chip backgrounds
+$color-accent:       #ac74ac; // Medium purple — CTAs, active states
+$color-warm-gray:    #948484; // Warm gray — subtle UI elements
+
+// Semantic aliases
+$color-bg:            $color-cream;
+$color-text:          $color-primary;
+$color-text-body:     darken($color-neutral, 10%);
+$color-text-muted:    $color-neutral;
+$color-border:        $color-accent-light;
+$color-border-focus:  $color-accent;
+$color-cta:           $color-accent;
+$color-cta-hover:     darken($color-accent, 8%);
+$color-surface-card:  #ffffff;
+$color-overlay:       rgba($color-primary, 0.45);
+
+// -----------------------------------------------------------------------------
+// Typography
+// -----------------------------------------------------------------------------
+$font-serif:       'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+$font-sans:        'Nunito', system-ui, -apple-system, sans-serif;
+$font-body:        $font-sans;
+$font-display:     $font-serif;
+
+$text-xs:   0.75rem;   // 12px
+$text-sm:   0.875rem;  // 14px
+$text-base: 1rem;      // 16px
+$text-lg:   1.125rem;  // 18px
+$text-xl:   1.25rem;   // 20px
+$text-2xl:  1.5rem;    // 24px
+$text-3xl:  2rem;      // 32px
+$text-4xl:  2.5rem;    // 40px
+$text-5xl:  3.5rem;    // 56px
+
+$font-light:    300;
+$font-regular:  400;
+$font-medium:   500;
+$font-semibold: 600;
+
+$line-height-tight:  1.25;
+$line-height-snug:   1.4;
+$line-height-normal: 1.6;
+$line-height-loose:  1.8;
+
+// -----------------------------------------------------------------------------
+// Spacing (8pt grid)
+// -----------------------------------------------------------------------------
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+$space-12: 48px;
+$space-16: 64px;
+$space-20: 80px;
+$space-24: 96px;
+
+// -----------------------------------------------------------------------------
+// Layout
+// -----------------------------------------------------------------------------
+$container-max:   1280px;
+$container-prose: 768px;
+$header-height:   72px;
+
+// Breakpoints
+$bp-xs:  480px;
+$bp-sm:  640px;
+$bp-md:  768px;
+$bp-lg:  1024px;
+$bp-xl:  1280px;
+$bp-2xl: 1536px;
+
+// -----------------------------------------------------------------------------
+// Borders & Radius
+// -----------------------------------------------------------------------------
+$radius-sm:   4px;
+$radius-md:   8px;
+$radius-lg:   16px;
+$radius-xl:   24px;
+$radius-full: 9999px;
+
+$border-thin:   1px solid $color-border;
+$border-medium: 2px solid $color-border;
+
+// -----------------------------------------------------------------------------
+// Shadows
+// -----------------------------------------------------------------------------
+$shadow-xs:  0 1px 2px  rgba($color-primary, 0.06);
+$shadow-sm:  0 1px 4px  rgba($color-primary, 0.08);
+$shadow-md:  0 4px 12px rgba($color-primary, 0.10);
+$shadow-lg:  0 8px 24px rgba($color-primary, 0.14);
+$shadow-xl:  0 16px 40px rgba($color-primary, 0.18);
+
+// -----------------------------------------------------------------------------
+// Transitions
+// -----------------------------------------------------------------------------
+$ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-enter:    cubic-bezier(0, 0, 0.2, 1);
+$ease-exit:     cubic-bezier(0.4, 0, 1, 1);
+
+$duration-fast:   120ms;
+$duration-base:   220ms;
+$duration-slow:   360ms;
+$duration-slower: 500ms;
+
+$transition-base:     $duration-base $ease-standard;
+$transition-colors:   color $duration-fast $ease-standard, background-color $duration-fast $ease-standard, border-color $duration-fast $ease-standard;
+$transition-transform: transform $duration-base $ease-standard;
+$transition-shadow:   box-shadow $duration-base $ease-standard;

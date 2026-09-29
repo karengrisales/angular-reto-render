@@ -1,0 +1,56 @@
+<app-main-layout>
+  <!-- TODO: reemplazar los textos de ejemplo con la historia real de la marca -->
+
+  <!-- ─── Historia ────────────────────────────────────────────── -->
+  <section class="about__hero" aria-labelledby="about-heading">
+    <div class="container about__narrow">
+      <p class="label">Quiénes somos</p>
+      <h1 class="about__title" id="about-heading">{{ brand.name }}</h1>
+      <p class="about__lead">{{ brand.slogan }}</p>
+      <p class="about__body">
+        {{ brand.name }} nació de la pasión por crear accesorios con identidad propia.
+        Lo que empezó como un pasatiempo, diseñando piezas para amigas y familia,
+        se convirtió en una marca de bisutería artesanal que busca que cada persona
+        encuentre una pieza que hable de ella.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── Misión y visión ─────────────────────────────────────── -->
+  <section class="about__section" aria-label="Misión y visión">
+    <div class="container about__grid">
+      <article class="about__card">
+        <h2 class="about__card-title">Misión</h2>
+        <p class="about__body">
+          Crear bisutería artesanal única, con materiales de calidad y atención al detalle,
+          para que cada persona exprese su personalidad a través de lo que lleva.
+        </p>
+      </article>
+      <article class="about__card">
+        <h2 class="about__card-title">Visión</h2>
+        <p class="about__body">
+          Ser una marca de bisutería artesanal reconocida por la originalidad de sus diseños
+          y la cercanía con sus clientas.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─── Valores ─────────────────────────────────────────────── -->
+  <section class="about__section" aria-labelledby="values-heading">
+    <div class="container">
+      <h2 class="about__section-title" id="values-heading">Lo que nos mueve</h2>
+      <ul class="about__values" role="list">
+        @for (value of values; track value.title) {
+          <li class="about__card">
+            <h3 class="about__card-title">{{ value.title }}</h3>
+            <p class="about__body">{{ value.text }}</p>
+          </li>
+        }
+      </ul>
+      <div class="about__cta">
+        <app-button size="lg" [routerLink]="['/catalogo']">Ver catálogo</app-button>
+      </div>
+    </div>
+  </section>
+</app-main-layout>

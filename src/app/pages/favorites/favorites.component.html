@@ -1,0 +1,46 @@
+<app-main-layout>
+  <div class="favorites container page-enter">
+
+    <header class="favorites__header">
+      <div class="favorites__title-row">
+        <h1 class="favorites__title">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          Mis favoritos
+        </h1>
+        @if (!isEmpty()) {
+          <app-button variant="ghost" size="sm" (clicked)="clearAll()">
+            Limpiar todo
+          </app-button>
+        }
+      </div>
+      <p class="favorites__count">
+        @if (count() > 0) {
+          {{ count() }} {{ count() === 1 ? 'pieza guardada' : 'piezas guardadas' }}
+        }
+      </p>
+    </header>
+
+    @if (isEmpty()) {
+      <div class="favorites__empty" role="status">
+        <div class="favorites__empty-icon" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h2 class="favorites__empty-title">Aún no tienes favoritos</h2>
+        <p class="favorites__empty-desc">
+          Explora el catálogo y guarda las piezas que más te gusten.
+        </p>
+        <app-button [routerLink]="['/catalogo']">Explorar catálogo</app-button>
+      </div>
+    } @else {
+      <app-product-grid
+        [products]="favoriteProducts()"
+        [loading]="loading()"
+      />
+    }
+
+  </div>
+</app-main-layout>
