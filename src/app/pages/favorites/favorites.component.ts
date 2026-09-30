@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  afterNextRender,
   computed,
   inject,
   signal,
@@ -20,7 +21,12 @@ import { catchError, of } from 'rxjs';
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [MainLayoutComponent, ProductGridComponent, ButtonComponent, RouterLink],
+  imports: [
+    MainLayoutComponent,
+    ProductGridComponent,
+    ButtonComponent,
+    RouterLink,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'favorites.component.html',
   styleUrl: 'favorites.component.scss',
@@ -34,17 +40,22 @@ export class FavoritesComponent implements OnInit {
   protected readonly isEmpty = this.favs.isEmpty;
   protected readonly allProducts = signal<Product[]>([]);
   protected readonly loading = signal(true);
+  protected readonly hydrated = signal(false);
   protected readonly favoriteProducts = computed(() => {
     const ids = this.favs.favoriteIds();
-    return this.allProducts().filter(p => ids.has(p.id));
+    return this.allProducts().filter((p) => ids.has(p.id));
   });
+
+  constructor() {
+    afterNextRender(() => this.hydrated.set(true));
+  }
 
   ngOnInit(): void {
     this.setSeo();
     this.contentful
       .getProducts()
       .pipe(catchError(() => of([])))
-      .subscribe(products => {
+      .subscribe((products) => {
         this.allProducts.set(products);
         this.loading.set(false);
       });
@@ -58,7 +69,9 @@ export class FavoritesComponent implements OnInit {
     const meta = this.seo
       .createBuilder()
       .title('Mis favoritos')
-      .description(`Tus piezas guardadas de ${BRAND.name}. Vuelve cuando quieras a explorarlas.`)
+      .description(
+        `Tus piezas guardadas de ${BRAND.name}. Vuelve cuando quieras a explorarlas.`,
+      )
       .noIndex()
       .build();
     this.seo.apply(meta);

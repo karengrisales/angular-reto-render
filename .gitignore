@@ -41,3 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /.angular
+
+# Generated before each build (scripts/generate-prerender-routes.mjs)
+/prerender-routes.txt
