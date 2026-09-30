@@ -1,28 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "dist/alexa-bijoux/server/server.mjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "dist/alexa-bijoux/browser/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/assets/(.*)",
-      "dest": "/dist/alexa-bijoux/browser/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|svg|webp|woff2?))",
-      "dest": "/dist/alexa-bijoux/browser/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/alexa-bijoux/server/server.mjs"
-    }
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/alexa-bijoux/browser",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
