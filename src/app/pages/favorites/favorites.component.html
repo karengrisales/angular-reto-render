@@ -9,20 +9,22 @@
           </svg>
           Mis favoritos
         </h1>
-        @if (!isEmpty()) {
+        @if (hydrated() && !isEmpty()) {
           <app-button variant="ghost" size="sm" (clicked)="clearAll()">
             Limpiar todo
           </app-button>
         }
       </div>
       <p class="favorites__count">
-        @if (count() > 0) {
+        @if (hydrated() && count() > 0) {
           {{ count() }} {{ count() === 1 ? 'pieza guardada' : 'piezas guardadas' }}
         }
       </p>
     </header>
 
-    @if (isEmpty()) {
+    @if (!hydrated()) {
+      <app-product-grid [products]="[]" [loading]="true" [skeletonCount]="4" />
+    } @else if (isEmpty()) {
       <div class="favorites__empty" role="status">
         <div class="favorites__empty-icon" aria-hidden="true">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
