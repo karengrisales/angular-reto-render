@@ -75,8 +75,8 @@
         <div class="product-detail__info">
           <div class="product-detail__meta">
             <app-badge variant="surface">{{ product()!.categoryName }}</app-badge>
-            @if (product()!.featured) {
-              <app-badge variant="primary">Destacado</app-badge>
+            @if (product()!.isNew) {
+              <app-badge variant="primary">Nuevo</app-badge>
             }
           </div>
 

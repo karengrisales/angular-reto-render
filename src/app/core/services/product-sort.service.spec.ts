@@ -4,14 +4,14 @@ import {
   NewestFirstStrategy,
   NameAscStrategy,
   NameDescStrategy,
-  FeaturedFirstStrategy,
+  NewFirstStrategy,
 } from './product-sort.service';
 import type { Product } from '../models/product.model';
 
 const mockProducts: Product[] = [
-  { id: '1', slug: 'collar-a', name: 'Collar Amanecer', category: 'collares', categoryName: 'Collares', images: [], featured: false, materials: [], createdAt: '2024-01-01', description: '' },
-  { id: '2', slug: 'arete-b', name: 'Arete Brillo', category: 'aretes', categoryName: 'Aretes', images: [], featured: true, materials: [], createdAt: '2024-03-15', description: '' },
-  { id: '3', slug: 'manilla-c', name: 'Manilla Cielo', category: 'manillas', categoryName: 'Manillas', images: [], featured: false, materials: [], createdAt: '2024-02-10', description: '' },
+  { id: '1', slug: 'collar-a', name: 'Collar Amanecer', category: 'collares', categoryName: 'Collares', images: [], isNew: false, materials: [], createdAt: '2024-01-01', description: '' },
+  { id: '2', slug: 'arete-b', name: 'Arete Brillo', category: 'aretes', categoryName: 'Aretes', images: [], isNew: true, materials: [], createdAt: '2024-03-15', description: '' },
+  { id: '3', slug: 'manilla-c', name: 'Manilla Cielo', category: 'manillas', categoryName: 'Manillas', images: [], isNew: false, materials: [], createdAt: '2024-02-10', description: '' },
 ];
 
 describe('ProductSortService (Strategy pattern)', () => {
@@ -47,10 +47,10 @@ describe('ProductSortService (Strategy pattern)', () => {
     expect(sorted[0].name).toBe('Manilla Cielo');
   });
 
-  it('FeaturedFirstStrategy puts featured products first', () => {
-    const strategy = new FeaturedFirstStrategy();
+  it('NewFirstStrategy puts new products first', () => {
+    const strategy = new NewFirstStrategy();
     const sorted = strategy.sort(mockProducts);
-    expect(sorted[0].featured).toBe(true);
+    expect(sorted[0].isNew).toBe(true);
   });
 
   it('setStrategy switches the active algorithm', () => {

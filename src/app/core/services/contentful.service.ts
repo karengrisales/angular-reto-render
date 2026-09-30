@@ -6,28 +6,23 @@
  * Scattering that knowledge across multiple components couples them to the CMS.
  *
  * Solution: ContentfulService exposes a clean domain API — getProducts(),
- * getProductBySlug(), getCategories() — and hides every CMS detail.
+ * getProductBySlug(), getNewProducts() — and hides every CMS detail.
  * Swapping Contentful for another CMS means changing only this file.
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import type {
   ContentfulAsset,
   ContentfulEntry,
+  ContentfulLink,
   ContentfulProductFields,
   ContentfulResponse,
   Product,
   ProductImage,
 } from '../models/product.model';
-import type { Category } from '../models/category.model';
-
-interface ContentfulCategoryFields {
-  name: string;
-  slug: string;
-  icon?: string;
-}
+import { ALL_CATEGORIES } from '../models/category.model';
 
 @Injectable({ providedIn: 'root' })
 export class ContentfulService {
@@ -36,9 +31,6 @@ export class ContentfulService {
   private readonly base = `${this.cfg.cdnBase}/spaces/${this.cfg.spaceId}/environments/${this.cfg.environment}`;
   private readonly authHeader = { Authorization: `Bearer ${this.cfg.accessToken}` };
 
-  // SharedReplay(1) caches the category list for the app lifetime — it rarely changes.
-  private readonly categories$ = this.fetchCategories().pipe(shareReplay(1));
-
   getProducts(category?: string): Observable<Product[]> {
     let params = new HttpParams()
       .set('content_type', 'product')
@@ -46,7 +38,7 @@ export class ContentfulService {
       .set('order', '-sys.createdAt');
 
     if (category) {
-      params = params.set('fields.category.fields.slug[match]', category);
+      params = params.set('fields.category', category);
     }
 
     return this.http
@@ -54,13 +46,13 @@ export class ContentfulService {
         headers: this.authHeader,
         params,
       })
-      .pipe(map(res => res.items.map(item => this.toProduct(item))));
+      .pipe(map(res => res.items.map(item => this.toProduct(item, res.includes?.Asset ?? []))));
   }
 
-  getFeaturedProducts(): Observable<Product[]> {
+  getNewProducts(): Observable<Product[]> {
     const params = new HttpParams()
       .set('content_type', 'product')
-      .set('fields.featured', 'true')
+      .set('fields.isNew', 'true')
       .set('include', '2')
       .set('order', '-sys.createdAt')
       .set('limit', '8');
@@ -70,7 +62,7 @@ export class ContentfulService {
         headers: this.authHeader,
         params,
       })
-      .pipe(map(res => res.items.map(item => this.toProduct(item))));
+      .pipe(map(res => res.items.map(item => this.toProduct(item, res.includes?.Asset ?? []))));
   }
 
   getProductBySlug(slug: string): Observable<Product | null> {
@@ -85,53 +77,34 @@ export class ContentfulService {
         headers: this.authHeader,
         params,
       })
-      .pipe(map(res => (res.items[0] ? this.toProduct(res.items[0]) : null)));
-  }
-
-  getCategories(): Observable<Category[]> {
-    return this.categories$;
+      .pipe(map(res => (res.items[0] ? this.toProduct(res.items[0], res.includes?.Asset ?? []) : null)));
   }
 
   // ──────────────────────────────────────────────────────────────────────────
   // Private normalizers — only this service knows about Contentful internals
   // ──────────────────────────────────────────────────────────────────────────
 
-  private fetchCategories(): Observable<Category[]> {
-    const params = new HttpParams()
-      .set('content_type', 'category')
-      .set('order', 'fields.name');
-
-    return this.http
-      .get<ContentfulResponse<ContentfulCategoryFields>>(`${this.base}/entries`, {
-        headers: this.authHeader,
-        params,
-      })
-      .pipe(
-        map(res =>
-          res.items.map(item => ({
-            id: item.sys.id,
-            name: item.fields.name,
-            slug: item.fields.slug as Category['slug'],
-            icon: item.fields.icon ?? '',
-          }))
-        )
-      );
-  }
-
-  private toProduct(entry: ContentfulEntry<ContentfulProductFields>): Product {
+  private toProduct(entry: ContentfulEntry<ContentfulProductFields>, assets: ContentfulAsset[]): Product {
     const f = entry.fields;
     return {
       id: entry.sys.id,
       slug: f.slug,
       name: f.name,
       description: f.description,
-      category: f.category?.fields?.slug ?? 'collares',
-      categoryName: f.category?.fields?.name ?? '',
-      images: (f.images ?? []).map(a => this.toImage(a)),
-      featured: f.featured ?? false,
-      materials: f.materials ?? [],
+      category: f.category ?? 'collares',
+      categoryName: ALL_CATEGORIES.find(c => c.slug === f.category)?.name ?? '',
+      images: this.resolveAssets(f.images ?? [], assets).map(a => this.toImage(a)),
+      isNew: f.isNew ?? false,
+      materials: f.material ? [f.material] : [],
       createdAt: entry.sys.createdAt,
     };
+  }
+
+  // Entries only carry links to their images; the asset data comes in `includes.Asset`
+  private resolveAssets(links: ContentfulLink[], assets: ContentfulAsset[]): ContentfulAsset[] {
+    return links
+      .map(link => assets.find(asset => asset.sys.id === link.sys.id))
+      .filter((asset): asset is ContentfulAsset => !!asset);
   }
 
   private toImage(asset: ContentfulAsset): ProductImage {

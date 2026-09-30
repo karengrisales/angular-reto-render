@@ -30,16 +30,16 @@ export class HomeComponent implements OnInit {
 
   protected readonly brand = BRAND;
   protected readonly categories = ALL_CATEGORIES;
-  protected readonly featuredProducts = signal<Product[]>([]);
+  protected readonly newProducts = signal<Product[]>([]);
   protected readonly loading = signal(true);
 
   ngOnInit(): void {
     this.setSeo();
     this.contentful
-      .getFeaturedProducts()
+      .getNewProducts()
       .pipe(catchError(() => of([])))
       .subscribe(products => {
-        this.featuredProducts.set(products);
+        this.newProducts.set(products);
         this.loading.set(false);
       });
   }

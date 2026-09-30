@@ -1,7 +1,7 @@
 /**
  * PATTERN: Strategy (GoF Behavioral)
  *
- * Problem: The catalog needs multiple sort orders (newest, A–Z, Z–A, featured
+ * Problem: The catalog needs multiple sort orders (newest, A–Z, Z–A, new
  * first). Using if/switch chains in the component violates Open/Closed and
  * makes testing hard.
  *
@@ -50,11 +50,11 @@ export class NameDescStrategy implements SortStrategy {
   }
 }
 
-export class FeaturedFirstStrategy implements SortStrategy {
-  readonly value = 'featured';
-  readonly label = 'Destacados primero';
+export class NewFirstStrategy implements SortStrategy {
+  readonly value = 'new';
+  readonly label = 'Novedades primero';
   sort(products: Product[]): Product[] {
-    return [...products].sort((a, b) => Number(b.featured) - Number(a.featured));
+    return [...products].sort((a, b) => Number(b.isNew) - Number(a.isNew));
   }
 }
 
@@ -65,7 +65,7 @@ export class ProductSortService {
     new NewestFirstStrategy(),
     new NameAscStrategy(),
     new NameDescStrategy(),
-    new FeaturedFirstStrategy(),
+    new NewFirstStrategy(),
   ];
 
   private readonly _active = signal<SortStrategy>(this.strategies[0]);

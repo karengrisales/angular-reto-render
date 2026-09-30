@@ -13,7 +13,7 @@
         <app-button size="lg" [routerLink]="['/catalogo']">
           Ver catálogo
         </app-button>
-        <app-button variant="secondary" size="lg" [routerLink]="['/favoritos']">
+        <app-button variant="outline-light" size="lg" [routerLink]="['/favoritos']">
           Mis favoritos
         </app-button>
       </div>
@@ -41,16 +41,16 @@
     </div>
   </section>
 
-  <!-- ─── Featured Products ───────────────────────────────────── -->
-  <section class="featured section" aria-labelledby="featured-heading">
+  <!-- ─── New Products ────────────────────────────────────────── -->
+  <section class="featured section" aria-labelledby="new-heading">
     <div class="container">
       <div class="section__header">
-        <h2 class="section__title" id="featured-heading">Piezas destacadas</h2>
+        <h2 class="section__title" id="new-heading">Novedades</h2>
         <app-button variant="ghost" [routerLink]="['/catalogo']">Ver todo →</app-button>
       </div>
 
       <app-product-grid
-        [products]="featuredProducts()"
+        [products]="newProducts()"
         [loading]="loading()"
         [priorityCount]="4"
       />

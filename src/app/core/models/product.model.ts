@@ -15,7 +15,7 @@ export interface Product {
   category: CategorySlug;
   categoryName: string;
   images: ProductImage[];
-  featured: boolean;
+  isNew: boolean;
   materials?: string[];
   createdAt: string;
 }
@@ -33,6 +33,10 @@ export interface ContentfulAsset {
   };
 }
 
+export interface ContentfulLink {
+  sys: { type: 'Link'; linkType: 'Asset' | 'Entry'; id: string };
+}
+
 export interface ContentfulEntry<T = Record<string, unknown>> {
   sys: { id: string; createdAt: string };
   fields: T;
@@ -42,10 +46,11 @@ export interface ContentfulProductFields {
   name: string;
   slug: string;
   description: string;
-  category: ContentfulEntry<{ name: string; slug: CategorySlug }>;
-  images: ContentfulAsset[];
-  featured?: boolean;
-  materials?: string[];
+  category?: CategorySlug;
+  material?: string;
+  images?: ContentfulLink[];
+  isNew?: boolean;
+  tags?: string[];
 }
 
 export interface ContentfulResponse<T> {

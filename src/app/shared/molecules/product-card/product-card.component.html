@@ -42,8 +42,8 @@
         }
       </button>
 
-      @if (product().featured) {
-        <app-badge class="product-card__badge" variant="primary">Destacado</app-badge>
+      @if (product().isNew) {
+        <app-badge class="product-card__badge" variant="primary">Nuevo</app-badge>
       }
     </div>
 
