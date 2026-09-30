@@ -1,0 +1,11 @@
+{
+  "name": "Alexa Bijoux",
+  "short_name": "Alexa Bijoux",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f9f6ea",
+  "theme_color": "#4c1c4f",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+  ]
+}

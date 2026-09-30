@@ -1,5 +1,5 @@
-@use 'variables' as *;
-@use 'mixins' as *;
+@use "variables" as *;
+@use "mixins" as *;
 
 .btn {
   @include button-reset;
@@ -9,12 +9,17 @@
   font-family: $font-body;
   font-weight: $font-medium;
   letter-spacing: 0.02em;
-  transition: $transition-colors, box-shadow $transition-base, transform $duration-fast $ease-standard;
+  transition:
+    $transition-colors,
+    box-shadow $transition-base,
+    transform $duration-fast $ease-standard;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
 
-  &:focus-visible { @include focus-ring; }
+  &:focus-visible {
+    @include focus-ring;
+  }
 
   &[disabled] {
     opacity: 0.45;
@@ -22,7 +27,9 @@
   }
 
   // Ripple-like press feedback
-  &:active:not([disabled]) { transform: scale(0.97); }
+  &:active:not([disabled]) {
+    transform: scale(0.97);
+  }
 
   // ── Variants ──────────────────────────────────────────────────────────────
   &--primary {
@@ -30,7 +37,10 @@
     color: $color-cream;
     box-shadow: $shadow-sm;
 
-    &:hover  { background: lighten($color-primary, 6%); box-shadow: $shadow-md; }
+    &:hover {
+      background: lighten($color-primary, 6%);
+      box-shadow: $shadow-md;
+    }
   }
 
   &--secondary {
@@ -38,14 +48,29 @@
     border: 1.5px solid $color-primary;
     color: $color-primary;
 
-    &:hover { background: rgba($color-primary, 0.06); }
+    &:hover {
+      background: rgba($color-primary, 0.06);
+    }
+  }
+
+  &--outline-light {
+    background: transparent;
+    border: 1.5px solid $color-cream;
+    color: $color-cream;
+
+    &:hover {
+      background: rgba($color-cream, 0.12);
+    }
   }
 
   &--ghost {
     background: transparent;
     color: $color-text-muted;
 
-    &:hover { background: rgba($color-primary, 0.06); color: $color-primary; }
+    &:hover {
+      background: rgba($color-primary, 0.06);
+      color: $color-primary;
+    }
   }
 
   &--icon {
@@ -54,16 +79,35 @@
     color: $color-text-muted;
     padding: $space-2 !important;
 
-    &:hover { background: rgba($color-primary, 0.08); color: $color-primary; }
-    &--active { color: $color-accent !important; }
+    &:hover {
+      background: rgba($color-primary, 0.08);
+      color: $color-primary;
+    }
+    &--active {
+      color: $color-accent !important;
+    }
   }
 
   // ── Sizes ─────────────────────────────────────────────────────────────────
-  &--sm { font-size: $text-sm;  padding: $space-2 $space-4; }
-  &--md { font-size: $text-base; padding: $space-3 $space-6; }
-  &--lg { font-size: $text-lg;  padding: $space-4 $space-8; }
+  &--sm {
+    font-size: $text-sm;
+    padding: $space-2 $space-4;
+  }
+  &--md {
+    font-size: $text-base;
+    padding: $space-3 $space-6;
+  }
+  &--lg {
+    font-size: $text-lg;
+    padding: $space-4 $space-8;
+  }
 
   // ── Modifiers ─────────────────────────────────────────────────────────────
-  &--full { width: 100%; }
-  &--active { background: rgba($color-accent, 0.12); color: $color-accent; }
+  &--full {
+    width: 100%;
+  }
+  &--active {
+    background: rgba($color-accent, 0.12);
+    color: $color-accent;
+  }
 }

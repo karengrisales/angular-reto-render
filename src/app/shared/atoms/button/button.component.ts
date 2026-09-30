@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'icon';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline-light' | 'ghost' | 'icon';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
